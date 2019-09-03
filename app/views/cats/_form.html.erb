@@ -1,0 +1,72 @@
+<% if edit %>
+  <% action = cat_url %>
+  <% button_text = 'Update cat'%>
+  <% title = 'edit cat' %>
+<% else %>
+  <% action = cats_url %>
+  <% button_text = 'New cat' %>
+  <% title = 'new cat' %>
+<% end%>
+
+
+<h1> <%= title %> </h1>
+<form action="<%= action %>" method="POST">
+  <% if edit %>
+    <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+  <label for="name">Name</label>
+  <% if edit %>
+    <input type= "input" name = "cat[name]" id="name" value="<%= @cat.name %>">
+    <label for="date">Birth date</label>
+    <input type= "date" name = "cat[birth_date]" id="date" value="<%= @cat.birth_date %>">
+  <% else %>
+    <input type= "input" name = "cat[name]" id="name">
+    <label for="date">Birth date</label>
+    <input type= "date" name = "cat[birth_date]" id="date">
+  <% end %>
+
+  <label for="color">Color</label>
+
+    <select name = "cat[color]">
+      <% if edit %>
+        <option selected value="<%= @cat.color %>"><%= @cat.color %></option>
+      <% end %>
+      <option value="black">black</option>
+      <option value="green">green</option>
+      <option value="orange">orange</option>
+      <option value="blue">blue</option>
+      <option value="white">white</option>
+      <option value="gray">gray</option>
+      <option value="brown">brown</option>
+      <option value="red">red</option>
+  </select>
+  <% if edit %>
+    <% if @cat.sex == "M" %>
+      <input type="radio" id="m" name="cat[sex]" value="M" checked>
+      <label for="m">M</label>
+      <input type="radio" id="f" name="cat[sex]" value="F">
+      <label for="f">F</label>
+    <% else %>
+      <input type="radio" id="m" name="cat[sex]" value="M">
+      <label for="m">M</label>
+      <input type="radio" id="f" name="cat[sex]" value="F" checked>
+      <label for="f">F</label>
+    <% end %>
+  <% else %>
+    <input type="radio" id="m" name="cat[sex]" value="M" checked>
+    <label for="m">M</label>
+    <input type="radio" id="f" name="cat[sex]" value="F">
+    <label for="f">F</label>
+  <% end %>
+
+  <br><br><br>
+  <label for="description">Description</label>
+  <br>
+  <% if edit %>
+    <textarea id="description" name="cat[description]" rows="8" cols="80"><%= @cat.description %></textarea>
+  <% else %>
+    <textarea id="description" name="cat[description]" rows="8" cols="80"></textarea>
+  <% end %>
+  <br>
+  <label for="submit">Submit</label>
+  <input type= "submit" name = "submit" id="submit" value = "<%= button_text %>">
